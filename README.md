@@ -1,18 +1,16 @@
-# Welcome to React Router!
+# VibeJam
 
-A modern, production-ready template for building full-stack React applications using React Router.
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+A modern, interactive web application for music collaboration and sharing vibes. Built with React Router and modern web technologies.
 
 ## Features
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- 🎵 Real-time music collaboration
+- 🚀 Server-side rendering for optimal performance
+- ⚡️ Hot Module Replacement (HMR) for efficient development
+- 🎨 Modern UI with TailwindCSS
+- 📱 Responsive design for all devices
+- 🔒 TypeScript for type safety
+- 🔄 Data loading and mutations with React Router
 
 ## Getting Started
 
@@ -22,6 +20,8 @@ Install the dependencies:
 
 ```bash
 npm install
+# or
+bun install
 ```
 
 ### Development
@@ -30,6 +30,8 @@ Start the development server with HMR:
 
 ```bash
 npm run dev
+# or
+bun run dev
 ```
 
 Your application will be available at `http://localhost:5173`.
@@ -40,6 +42,8 @@ Create a production build:
 
 ```bash
 npm run build
+# or
+bun run build
 ```
 
 ## Deployment
@@ -49,10 +53,10 @@ npm run build
 To build and run using Docker:
 
 ```bash
-docker build -t my-app .
+docker build -t vibejam .
 
 # Run the container
-docker run -p 3000:3000 my-app
+docker run -p 3000:3000 vibejam
 ```
 
 The containerized application can be deployed to any platform that supports Docker, including:
@@ -78,10 +82,18 @@ Make sure to deploy the output of `npm run build`
 │   └── server/    # Server-side code
 ```
 
-## Styling
+## Tech Stack
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+- React 19
+- React Router 7
+- TailwindCSS 4
+- TypeScript
+- Vite
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-Built with ❤️ using React Router.
+Built with ❤️ by the VibeJam team.

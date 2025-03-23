@@ -1,0 +1,623 @@
+* {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: monospace;
+  background-color: #000;
+}
+
+.pixel-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  min-height: 100vh;
+  z-index: -1;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  background-color: #000638; /* Fallback color */
+  object-fit: cover; /* Ensures the canvas covers the entire area */
+  min-width: 100%;
+  min-height: 100%;
+}
+
+/* Final Fantasy UI Styling */
+.ff-game-interface {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  padding: 1rem 0;
+  color: white;
+}
+
+.ff-title-box {
+  width: 90%;
+  max-width: 800px;
+  padding: 1.5rem;
+  background-color: rgba(0, 6, 56, 0.8);
+  border: 4px solid #e8d070;
+  margin-bottom: 2rem;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 24, 176, 0.6);
+}
+
+.ff-title {
+  font-size: 2rem;
+  color: #e8d070;
+  text-shadow: 2px 2px 0 #000;
+  margin: 0 0 1rem 0;
+  letter-spacing: 1px;
+}
+
+.ff-subtitle {
+  font-size: 1rem;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.ff-hash {
+  font-size: 1.25rem;
+  color: #4800f8;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.25rem 0.5rem;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+.ff-menu-layout {
+  display: flex;
+  width: 90%;
+  max-width: 800px;
+  gap: 1rem;
+}
+
+.ff-menu-box {
+  background: linear-gradient(
+    135deg,
+    rgba(20, 30, 60, 0.7) 0%,
+    rgba(40, 50, 90, 0.8) 100%
+  );
+  border: 2px solid rgba(120, 180, 255, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 100, 255, 0.2),
+    inset 0 0 10px rgba(100, 180, 255, 0.1);
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  min-width: 180px;
+  max-width: 250px;
+  backdrop-filter: blur(5px);
+}
+
+.ff-menu-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(120, 200, 255, 0.7),
+    transparent
+  );
+  animation: glow 4s infinite;
+}
+
+.ff-menu-title {
+  color: rgba(230, 230, 255, 0.9);
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 6px rgba(100, 150, 255, 0.8);
+  letter-spacing: 2px;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 8px;
+}
+
+.ff-menu-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(150, 200, 255, 0.6),
+    transparent
+  );
+}
+
+.ff-menu-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.ff-menu-item {
+  cursor: pointer;
+  position: relative;
+  padding: 0.6rem 1rem 0.6rem 1.8rem;
+  color: rgba(200, 210, 255, 0.8);
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  background: rgba(50, 70, 120, 0.3);
+  text-shadow: 0 0 4px rgba(100, 150, 255, 0.4);
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  border: 1px solid transparent;
+}
+
+.ff-menu-item:hover {
+  background: rgba(70, 90, 140, 0.5);
+  color: rgba(220, 230, 255, 0.9);
+  transform: translateX(4px);
+  border: 1px solid rgba(120, 180, 255, 0.3);
+  box-shadow: 0 0 8px rgba(70, 130, 230, 0.3);
+}
+
+.ff-menu-selected {
+  background: linear-gradient(
+    90deg,
+    rgba(70, 100, 180, 0.5),
+    rgba(50, 80, 160, 0.7)
+  );
+  color: rgba(230, 240, 255, 1);
+  text-shadow: 0 0 6px rgba(120, 190, 255, 0.8);
+  border: 1px solid rgba(130, 190, 255, 0.6);
+  box-shadow: 0 0 12px rgba(80, 140, 250, 0.4),
+    inset 0 0 6px rgba(120, 180, 255, 0.3);
+}
+
+.ff-cursor {
+  position: absolute;
+  left: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(120, 220, 255, 1);
+  text-shadow: 0 0 8px rgba(80, 160, 255, 0.9);
+  animation: pulse 1.5s infinite;
+  font-size: 0.9rem;
+}
+
+/* Content box styling */
+.ff-content-box {
+  background: linear-gradient(
+    135deg,
+    rgba(25, 35, 70, 0.7) 0%,
+    rgba(45, 55, 100, 0.8) 100%
+  );
+  border-radius: 12px;
+  border: 2px solid rgba(130, 190, 255, 0.3);
+  box-shadow: 0 0 20px rgba(0, 100, 255, 0.25),
+    inset 0 0 15px rgba(100, 180, 255, 0.1);
+  flex: 1;
+  padding: 1.5rem;
+  backdrop-filter: blur(5px);
+  position: relative;
+  overflow: hidden;
+  min-width: 300px;
+}
+
+.ff-content-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(130, 210, 255, 0.7),
+    transparent
+  );
+  animation: glow 4s infinite;
+}
+
+/* Panel styling */
+.ff-panel {
+  background: rgba(40, 60, 100, 0.3);
+  border-radius: 8px;
+  padding: 1.2rem;
+  height: 100%;
+  position: relative;
+  border: 1px solid rgba(100, 160, 230, 0.2);
+  box-shadow: inset 0 0 10px rgba(60, 120, 200, 0.1);
+}
+
+.ff-panel-title {
+  color: rgba(230, 230, 255, 0.9);
+  font-size: 1.2rem;
+  margin-bottom: 1.2rem;
+  text-shadow: 0 0 6px rgba(100, 150, 255, 0.7);
+  letter-spacing: 1px;
+  position: relative;
+  padding-bottom: 8px;
+  font-weight: 600;
+}
+
+.ff-panel-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(150, 200, 255, 0.6), transparent);
+}
+
+.ff-panel-text {
+  color: rgba(200, 210, 240, 0.9);
+  line-height: 1.5;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 2px rgba(100, 150, 255, 0.3);
+}
+
+/* Button styling */
+.ff-submit-button {
+  display: inline-block;
+  background: linear-gradient(
+    135deg,
+    rgba(60, 100, 180, 0.8),
+    rgba(40, 80, 160, 0.9)
+  );
+  color: rgba(230, 240, 255, 1);
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(130, 190, 255, 0.4);
+  box-shadow: 0 0 12px rgba(60, 120, 230, 0.3),
+    inset 0 0 6px rgba(130, 190, 255, 0.2);
+  text-shadow: 0 0 4px rgba(100, 150, 255, 0.6);
+  font-weight: 600;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.ff-submit-button:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(70, 120, 210, 0.9),
+    rgba(50, 90, 180, 1)
+  );
+  box-shadow: 0 0 20px rgba(80, 140, 250, 0.5),
+    inset 0 0 10px rgba(150, 210, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.ff-submit-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 0 10px rgba(60, 120, 230, 0.2),
+    inset 0 0 6px rgba(130, 190, 255, 0.1);
+}
+
+.ff-submit-button::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.01)
+  );
+  transform: rotate(30deg);
+  transition: all 0.5s ease;
+}
+
+.ff-submit-button:hover::after {
+  transform: rotate(30deg) translate(10%, 10%);
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes glow {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+
+/* Title box styling */
+.ff-title-box {
+  background: linear-gradient(
+    135deg,
+    rgba(30, 40, 80, 0.7) 0%,
+    rgba(50, 65, 120, 0.8) 100%
+  );
+  border-radius: 12px;
+  border: 2px solid rgba(140, 200, 255, 0.3);
+  box-shadow: 0 0 25px rgba(0, 100, 255, 0.3),
+    inset 0 0 15px rgba(100, 180, 255, 0.1);
+  padding: 1.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+}
+
+.ff-title-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(140, 220, 255, 0.8),
+    transparent
+  );
+  animation: glow 5s infinite;
+}
+
+.ff-title {
+  color: rgba(230, 240, 255, 1);
+  font-size: 1.8rem;
+  text-shadow: 0 0 10px rgba(100, 180, 255, 0.8),
+    0 0 20px rgba(80, 140, 255, 0.4);
+  margin-bottom: 0.5rem;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+.ff-subtitle {
+  color: rgba(200, 220, 250, 0.9);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 5px rgba(100, 150, 255, 0.5);
+  letter-spacing: 1px;
+}
+
+.ff-hash {
+  color: rgba(150, 200, 255, 1);
+  font-weight: 600;
+  text-shadow: 0 0 8px rgba(100, 180, 255, 0.7);
+  letter-spacing: 1px;
+}
+
+/* Jury panel */
+.ff-jury-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1.2rem;
+  margin-top: 1rem;
+}
+
+.ff-jury-member {
+  background: rgba(50, 70, 120, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(100, 160, 230, 0.2);
+  box-shadow: inset 0 0 8px rgba(60, 120, 200, 0.1);
+  width: fit-content;
+}
+
+.ff-jury-member:hover {
+  background: rgba(60, 90, 150, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(40, 80, 160, 0.2),
+    inset 0 0 10px rgba(100, 180, 255, 0.2);
+  border: 1px solid rgba(130, 190, 255, 0.4);
+}
+
+.ff-jury-icon {
+  width: 60px;
+  height: 60px;
+  background: rgba(70, 110, 180, 0.3);
+  border-radius: 50%;
+  margin: 0 auto 0.8rem;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid rgba(130, 190, 255, 0.3);
+  box-shadow: 0 0 10px rgba(80, 140, 230, 0.4);
+}
+
+.ff-jury-name {
+  color: rgba(200, 220, 250, 0.9);
+  text-shadow: 0 0 4px rgba(100, 150, 255, 0.4);
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+/* Sponsors panel */
+.ff-sponsors-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.ff-sponsor {
+  background: rgba(50, 80, 140, 0.4);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  color: rgba(200, 230, 255, 0.9);
+  text-shadow: 0 0 5px rgba(100, 180, 255, 0.5);
+  font-weight: 600;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(120, 180, 255, 0.3);
+  box-shadow: 0 0 10px rgba(60, 140, 230, 0.2);
+}
+
+.ff-sponsor:hover {
+  background: rgba(60, 100, 170, 0.5);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(40, 100, 190, 0.3),
+    0 0 10px rgba(100, 180, 255, 0.4);
+  border: 1px solid rgba(140, 200, 255, 0.5);
+}
+
+.ff-plus {
+  color: rgba(150, 200, 255, 0.8);
+  font-size: 1.5rem;
+  text-shadow: 0 0 8px rgba(100, 180, 255, 0.6);
+}
+
+@media (max-width: 768px) {
+  .ff-menu-layout {
+    flex-direction: column;
+  }
+
+  .ff-menu-box,
+  .ff-content-box {
+    width: 100%;
+    max-width: none;
+  }
+
+  .ff-title {
+    font-size: 1.5rem;
+  }
+
+  .ff-menu-box {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.ff-title-decoration {
+  color: rgba(150, 210, 255, 0.9);
+  font-size: 0.9rem;
+  margin: 0 6px;
+  text-shadow: 0 0 6px rgba(80, 160, 255, 0.7);
+}
+
+.ff-panel-title-container {
+  position: relative;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.ff-cursor {
+  position: absolute;
+  left: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ff-cursor-inner {
+  color: rgba(120, 220, 255, 1);
+  text-shadow: 0 0 8px rgba(80, 160, 255, 0.9);
+  animation: pulse 1.5s infinite;
+  font-size: 0.9rem;
+}
+
+.ff-menu-text {
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.ff-menu-highlight {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    rgba(120, 180, 255, 0) 0%,
+    rgba(120, 180, 255, 0.1) 20%,
+    rgba(120, 180, 255, 0.2) 50%,
+    rgba(120, 180, 255, 0.1) 80%,
+    rgba(120, 180, 255, 0) 100%
+  );
+  animation: menuHighlight 3s ease-in-out infinite;
+}
+
+.ff-btn-icon {
+  margin-right: 8px;
+  display: inline-block;
+  animation: slideRight 1.5s ease-in-out infinite;
+}
+
+.ff-btn-text {
+  position: relative;
+}
+
+@keyframes slideRight {
+  0%,
+  100% {
+    transform: translateX(-2px);
+  }
+  50% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes menuHighlight {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.ff-menu-layout {
+  display: flex;
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.ff-game-interface {
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+  margin: 0 auto;
+  min-height: 100vh;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 10;
+}
