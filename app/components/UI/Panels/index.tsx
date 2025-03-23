@@ -1,11 +1,44 @@
 import type { FC } from "react";
 import { playSound } from "../../../utils/sound";
+import { useState, useEffect } from "react";
 
 export const SubmitPanel: FC = () => {
   const handleSubmitClick = () => {
     playSound("select");
     window.location.href = "http://jam.pieter.com";
   };
+
+  const [timeLeft, setTimeLeft] = useState<{
+    days: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
+  }>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const deadline = new Date("April 1, 2025").getTime();
+
+    const calculateTimeLeft = () => {
+      const now = new Date().getTime();
+      const difference = deadline - now;
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor(
+            (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          ),
+          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((difference % (1000 * 60)) / 1000),
+        });
+      }
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className="ff-submit-panel">
@@ -16,6 +49,27 @@ export const SubmitPanel: FC = () => {
         Join the vibejam game coding challenge! Create and submit your
         AI-powered game for a chance to win.
       </p>
+      <p className="ff-panel-text font-bold text-red-400">
+        Deadline: 1 April 2025
+      </p>
+      <div className="ff-panel-text text-yellow-300 flex justify-left gap-4 my-2">
+        <div className="text-center">
+          <div className="text-xl font-bold">{timeLeft.days}</div>
+          <div className="text-xs">DAYS</div>
+        </div>
+        <div className="text-center">
+          <div className="text-xl font-bold">{timeLeft.hours}</div>
+          <div className="text-xs">HOURS</div>
+        </div>
+        <div className="text-center">
+          <div className="text-xl font-bold">{timeLeft.minutes}</div>
+          <div className="text-xs">MINS</div>
+        </div>
+        <div className="text-center">
+          <div className="text-xl font-bold">{timeLeft.seconds}</div>
+          <div className="text-xs">SECS</div>
+        </div>
+      </div>
       <a
         href="#"
         className="ff-submit-button"
